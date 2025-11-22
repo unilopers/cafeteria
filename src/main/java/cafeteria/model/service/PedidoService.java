@@ -1,6 +1,6 @@
 package cafeteria.Model.service;
 
-import cafeteria.Model.dto.PedidoDTO;
+import cafeteria.dto.PedidoDTO;
 import cafeteria.Model.Repository.PedidoRepository;
 import cafeteria.Model.entities.Atendente;
 import cafeteria.Model.entities.Cliente;
