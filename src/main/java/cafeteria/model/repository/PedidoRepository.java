@@ -1,6 +1,6 @@
-package cafeteria.Model.Repository;
+package cafeteria.model.repository;
 
-import cafeteria.Model.entities.Pedido;
+import cafeteria.model.entities.Pedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
