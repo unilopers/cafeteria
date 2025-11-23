@@ -17,7 +17,7 @@ public class Pedido {
     @Column(name = "datahora", nullable = false, uptadable = false)
     private LocalDateTime dataHora;
 
-    @Column(name = "datahora_finalizacao", nullable = false)
+    @Column(name = "datahora_finalizacao")
     private LocalDateTime dataHoraFinalizacao;
 
     @Column(name = "status", nullable = false)
