@@ -2,6 +2,7 @@ package cafeteria.Controller;
 
 
 import cafeteria.model.entities.Cliente;
+import cafeteria.model.entities.Pedido;
 import cafeteria.model.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -73,6 +74,19 @@ public class ClienteController {
             return ResponseEntity.status(404).body(e.getMessage());
         }
 
+    }
+
+    @GetMapping("/historico/{id}")
+    public ResponseEntity<?> consultarPedidosCliente(@PathVariable("id") Integer id){
+        try{
+            List<Pedido> historico = clienteService.buscarHistoricoPedido(id);
+            if (historico.isEmpty()){
+                return ResponseEntity.ok("Este clinte não fez pedidos");
+            }
+            return ResponseEntity.ok(historico);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     //Delete
