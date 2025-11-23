@@ -14,12 +14,15 @@ public class Pedido {
     @Column(name = "valor", nullable = false, precision = 6, scale = 2 )
     private BigDecimal valor;
 
-    @Column(name = "datahora", nullable = false)
+    @Column(name = "datahora", nullable = false, uptadable = false)
     private LocalDateTime dataHora;
 
     @Column(name = "datahora_finalizacao", nullable = false)
     private LocalDateTime dataHoraFinalizacao;
 
+    @Column(name = "status", nullable = false)
+    private String status = "ABERTO";
+    
     //ForeignKey para Cliente
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
@@ -43,6 +46,7 @@ public class Pedido {
         //this.dataHora = método "aoCriar"
         this.cliente = cliente;
         this.atendente = atendente;
+        this.status = "ABERTO";
     }
 
     /*
@@ -79,6 +83,14 @@ public class Pedido {
 
     public void setDataHoraFinalizacao(LocalDateTime dataHoraFinalizacao) {
         this.dataHoraFinalizacao = dataHoraFinalizacao;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Cliente getCliente() {
