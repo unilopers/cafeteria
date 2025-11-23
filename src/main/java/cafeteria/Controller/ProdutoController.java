@@ -2,6 +2,7 @@ package cafeteria.Controller;
 
 import cafeteria.dto.ProdutoResponse;
 import cafeteria.model.entities.Produto;
+import cafeteria.model.service.ProdutoService;
 import cafeteria.model.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.util.List;
 public class ProdutoController {
 
     @Autowired
-    private ProdutoController repository;
+    private ProdutoService service;
 
     // GET - listar todos
     @GetMapping
