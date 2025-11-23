@@ -20,7 +20,7 @@ public class ItemPedidoController {
     @PostMapping("/adicionar")
     public ResponseEntity<?> adicionarItem(@RequestBody ItemPedidoDto dados) {
         try { ItemPedido novoItem = service.adicionarItem(
-                    dados.pedidoId,
+                    Long.valueOf(dados.pedidoId()),
                     dados.produtoId,
                     dados.quantidade
             );
