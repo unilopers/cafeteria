@@ -16,7 +16,7 @@ public class Pedido {
     @Column(name = "valor", nullable = false, precision = 6, scale = 2 )
     private BigDecimal valor;
 
-    @Column(name = "datahora", nullable = false, uptadable = false)
+    @Column(name = "datahora", nullable = false, updatable = false)
     private LocalDateTime dataHora;
 
     @Column(name = "datahora_finalizacao")
