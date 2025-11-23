@@ -1,6 +1,9 @@
 package cafeteria.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "Cliente")
@@ -15,6 +18,13 @@ public class Cliente {
     @Column(name="endereco", length = 100, nullable = false)
     private String endereco;
 
+
+    @OneToMany(mappedBy = "cliente")
+    @JsonIgnore // Evita o loop infinito ao gerar o JSON
+    private List<Pedido> pedidos = new ArrayList<>();
+
+
+
     public Cliente() {}
     public Cliente(String nome, String cpf, String endereco) {
         //this.id =
@@ -25,6 +35,14 @@ public class Cliente {
 
     /* Gett e Sett
          */
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
     public Integer getId() {
         return id;
     }
