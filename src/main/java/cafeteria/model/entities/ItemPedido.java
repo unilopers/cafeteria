@@ -36,8 +36,11 @@ public class ItemPedido {
     @PrePersist
     @PreUpdate
     public void calcularSubTotal() {
-        if (this.produto != null && this.produto.getPreco() != null && this.quantidade != null)
-            this.subValor = this.produto.getPreco().multiply(new BigDecimal(this.quantidade));
+        if (produto == null)
+            throw new IllegalStateException("ItemPedido precisa ter um produto.");
+
+        this.subValor = produto.getPreco()
+                .multiply(new BigDecimal(this.quantidade));
     }
 
 
