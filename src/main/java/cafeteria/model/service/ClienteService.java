@@ -103,24 +103,22 @@ public class ClienteService  {
         if (clienteBanco.isPresent()) {
 
             Cliente clienteAtualizar = clienteBanco.get();
-            if (cliente.getCpf().isEmpty()&&cliente.getNome().isEmpty()&&cliente.getEndereco().isEmpty()){
-                throw new Exception("Campos vazios.");
+            if (cliente.getCpf() != null && !cliente.getCpf().isEmpty()) {
+                clienteAtualizar.setCpf(cliente.getCpf());
             }
 
-            if (cliente.getCpf()==null||cliente.getCpf().isEmpty()){
-                cliente.setCpf(clienteAtualizar.getCpf());
+            if (cliente.getNome() != null && !cliente.getNome().isEmpty()) {
+                clienteAtualizar.setNome(cliente.getNome());
             }
-            if (cliente.getNome() == null||cliente.getNome().isEmpty()){
-                cliente.setNome(clienteAtualizar.getNome());
-            }
-            if (cliente.getEndereco()==null||cliente.getEndereco().isEmpty()){
-                cliente.setEndereco(clienteAtualizar.getEndereco());
+
+            if (cliente.getEndereco() != null && !cliente.getEndereco().isEmpty()) {
+                clienteAtualizar.setEndereco(cliente.getEndereco());
             }
 
             try {
-                clienteRepository.save(cliente);
+                clienteRepository.save(clienteAtualizar);
             } catch (Exception e) {
-                throw new Exception("Erro ao atualizar o cliente: " + cliente.getNome());
+                throw new Exception("Erro ao atualizar cliente ID " + cliente.getId() + ": " + e.getMessage());
             }
         } else {
             throw new Exception("Cliente não existe no banco");
