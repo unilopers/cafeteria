@@ -15,7 +15,7 @@ import java.util.List;
 public class ProdutoController {
 
     @Autowired
-    private ProdutoRepository repository;
+    private ProdutoController repository;
 
     // GET - listar todos
     @GetMapping
