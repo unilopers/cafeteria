@@ -28,10 +28,6 @@ public class PedidoService {
     // CREATE (usando DTO)
     public Pedido novoPedido(PedidoDTO dto) {
 
-        if (dto.valor() == null || dto.valor().compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("O valor do pedido deve ser maior que zero.");
-        }
-
         Cliente cliente = clienteRepository.findById(dto.cliente_id())
                 .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado: " + dto.cliente_id()));
 
