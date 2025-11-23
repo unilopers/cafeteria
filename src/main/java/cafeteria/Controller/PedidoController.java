@@ -67,6 +67,17 @@ public class PedidoController {
     }
 
 
+    //Exibir pedido por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<?> exibirPedido(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(pedidoService.exibirPedido(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+
+
     //Deletar
     @DeleteMapping("/apagar/{id}")
     public ResponseEntity<?> deletePedidoPorId(@PathVariable("id") Long idPedido) {
