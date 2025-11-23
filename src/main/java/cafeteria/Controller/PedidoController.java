@@ -1,8 +1,8 @@
 package cafeteria.Controller;
 
 import cafeteria.dto.PedidoDTO;
-import cafeteria.Model.entities.Pedido;
-import cafeteria.Model.service.PedidoService;
+import cafeteria.model.entities.Pedido;
+import cafeteria.model.service.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
