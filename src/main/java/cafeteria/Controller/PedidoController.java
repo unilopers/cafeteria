@@ -103,4 +103,16 @@ public class PedidoController {
         }
     }
 
+    //Finalizar pedido
+    @PutMapping("/{id}/finalizar")
+    public ResponseEntity<?> finalizarPedido(@PathVariable Long id) {
+        try {
+            Pedido pedido = pedidoService.finalizarPedido(id);
+            return ResponseEntity.ok(pedido);
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body(e.getMessage());
+        }
+    }
+
+    
 }
