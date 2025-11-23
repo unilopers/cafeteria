@@ -17,13 +17,11 @@ public class ProdutoController {
     @Autowired
     private ProdutoRepository repository;
 
-    // Rota GET: Listar todos os produtos
+    // GET - listar todos
     @GetMapping
     public ResponseEntity<List<ProdutoResponse>> listarTodos() {
-        List<Produto> produtos = repository.findAll();
-
-        // Transforma cada Produto em ProdutoResponse (DTO)
-        List<ProdutoResponse> resposta = produtos.stream()
+        List<ProdutoResponse> resposta = service.listarTodos()
+                .stream()
                 .map(ProdutoResponse::new)
                 .toList();
 
