@@ -36,10 +36,16 @@ public class ProdutoController {
     }
     
     
-    // Rota POST: Criar um produto novo
+    //POST
     @PostMapping
-    public ResponseEntity<Produto> criar(@RequestBody Produto produto) {
-        Produto salvo = repository.save(produto);
-        return ResponseEntity.status(201).body(salvo);
+    public ResponseEntity<ProdutoResponse> criar(@RequestBody Produto produto) {
+        Produto salvo = service.criar(produto);
+
+        return ResponseEntity
+                .created(URI.create("/produtos/" + salvo.getId()))
+                .body(new ProdutoResponse(salvo));
     }
+
+
+    
 }
