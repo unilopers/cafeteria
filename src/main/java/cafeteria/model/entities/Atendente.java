@@ -11,12 +11,13 @@ public class Atendente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "nome", nullable = false, length = 30)
     private String nome;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "cpf", nullable = false, length = 14, unique = true) 
     private String cpf;
 
+    @Column(name = "email", nullable = false, length = 50) 
     private String email;
 
     // Construtor vazio
