@@ -32,6 +32,9 @@ public class ItemPedido {
 
     public ItemPedido() {
     }
+
+    @PrePersist
+    @PreUpdate
     public void calcularSubTotal() {
         if (this.produto != null && this.produto.getPreco() != null && this.quantidade != null)
             this.subValor = this.produto.getPreco().multiply(new BigDecimal(this.quantidade));
