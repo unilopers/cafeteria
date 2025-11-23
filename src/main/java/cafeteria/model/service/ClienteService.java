@@ -83,29 +83,40 @@ public class ClienteService  {
 
     //Delete
     public void apagarClienteId(Integer id) throws Exception {
-        if (clienteRepository.findById(id).isEmpty()){
-            throw new Exception("Cliente com o id " + id + " não encontrado");
+
         Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new Exception("Cliente com o id " + id + " não encontrado"));
+        boolean temPedidoAtivo = cliente.getPedidos().stream()
+                .anyMatch(pedido -> !pedido.getStatus().equals("FINALIZADO"));
+
+        if (temPedidoAtivo){
+            throw new Exception("Não é possivel deletar esse cliente! Ele possui pedidos em ABERTO.");
         }
         try {
             clienteRepository.deleteById(id);
         } catch (Exception e) {
-            throw new Exception("ID não existente");
             throw new Exception("Não é possível excluir o cliente pois ele possui  pedidos registrados no banco de dados.");
         }
+
+
 
     }
 
     @Transactional
     public void apagarClienteCpf(String cpf) throws Exception {
-        if (clienteRepository.findByCpf(cpf).isEmpty()){
+        Cliente cliente = clienteRepository.findByCpf(cpf)
+                .orElseThrow(() -> new Exception("Cliente com o cpf " + cpf + " não encontrado"));
+
+        boolean temPedidoAtivo = cliente.getPedidos().stream()
+                .anyMatch(pedido -> !pedido.getStatus().equals("FINALIZADO"));
+
+        if (temPedidoAtivo) {
+            throw new Exception("Não é possível deletar esse cliente! Ele possui pedidos em ABERTO.");
         }
 
         try {
-            clienteRepository.deleteByCpf(cpf);
             clienteRepository.delete(cliente);
         } catch (Exception e) {
-            throw new Exception("CPF não existente");
             throw new Exception("Não é possível excluir o cliente pois ele possui pedidos registrados no banco de dados.");
         }
     }
@@ -149,12 +160,4 @@ public class ClienteService  {
         return clienteRepository.findByCpf(cliente.getCpf()).isPresent();
 
     }
-
-    public void fazerPedido() {}
-    //precisa Ter um pedido
-    public void cancelarPedido() {}
-    //precisa estar finalizando a compra
-    public void darGorjeta(){}
-    //precisa ter um pedido
-    public void pagar(){}
 }
