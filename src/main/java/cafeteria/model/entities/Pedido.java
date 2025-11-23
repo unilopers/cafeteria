@@ -46,9 +46,9 @@ public class Pedido {
 
     public Pedido (){}
 
-    public Pedido(BigDecimal valor, Cliente cliente, Atendente atendente) {
+    public Pedido(Cliente cliente, Atendente atendente) {
         //this.id =
-        this.valor = valor;
+        //this.valor = recalcularValor()
         //this.dataHora = método "aoCriar"
         this.cliente = cliente;
         this.atendente = atendente;
