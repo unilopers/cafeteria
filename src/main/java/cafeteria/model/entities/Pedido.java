@@ -33,6 +33,10 @@ public class Pedido {
     @JoinColumn(name = "funcionario_id", nullable = false)
     private Atendente atendente;
 
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemPedido> itens = new ArrayList<>();
+
+    
     @PrePersist
     public void aoCriar() {
         this.dataHora = LocalDateTime.now();
@@ -49,6 +53,31 @@ public class Pedido {
         this.status = "ABERTO";
     }
 
+
+    public void addItem(ItemPedido item) {
+        if (!"ABERTO".equals(this.status))
+            throw new IllegalStateException("Só é possível adicionar itens em pedidos ABERTOS.");
+
+        item.setPedido(this);
+        item.calcularSubTotal();
+        this.itens.add(item);
+        recalcularValor();
+    }
+
+    public void finalizar() {
+        if ("FINALIZADO".equals(this.status))
+            throw new IllegalStateException("O pedido já está finalizado.");
+
+        this.status = "FINALIZADO";
+        this.dataHoraFinalizacao = LocalDateTime.now();
+    }
+
+    private void recalcularValor() {
+        this.valor = itens.stream()
+                .map(ItemPedido::getSubValor)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+        
     /*
     Getters and
      Setters
@@ -109,5 +138,6 @@ public class Pedido {
         this.atendente = atendente;
     }
 
+    public List<ItemPedido> getItens() { return itens; }
 
 }
