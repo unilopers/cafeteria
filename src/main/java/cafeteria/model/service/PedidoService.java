@@ -69,6 +69,11 @@ public class PedidoService {
         return pedidosEncontrados;
     }
 
+    //Exibir Pedido
+    public Pedido exibirPedido(Long id) throws Exception {
+        return pedidoRepository.findById(id)
+                .orElseThrow(() -> new Exception("Pedido com ID " + id + " não foi encontrado."));
+    }
 
     //delete
     public void apagarPedidoPorId(Long id) throws Exception {
@@ -120,7 +125,6 @@ public class PedidoService {
     }
 
 
-    public void exibirPedido(){}
 
     public void finalizarPedido(){}
 }
