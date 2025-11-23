@@ -125,6 +125,15 @@ public class PedidoService {
     }
 
 
+    //finalizar pedido
+    public Pedido finalizarPedido(Long id) throws Exception {
 
-    public void finalizarPedido(){}
+        Pedido pedido = pedidoRepository.findById(id)
+                .orElseThrow(() -> new Exception("Pedido não encontrado"));
+
+        pedido.finalizar(); //regra de negócio que está na entity
+
+        return pedidoRepository.save(pedido);
+    }
+    
 }
