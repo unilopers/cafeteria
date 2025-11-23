@@ -92,18 +92,11 @@ public class PedidoService {
                 .orElseThrow(() -> new IllegalArgumentException("Pedido não encontrado."));
 
         // Verifica se DTO veio vazio
-        if (dto.valor() == null && dto.cliente_id() == null && dto.atendente_id() == null) {
+        if (dto.cliente_id() == null && dto.atendente_id() == null) {
             throw new IllegalArgumentException("Nenhum campo para atualizar foi enviado.");
         }
 
         //Atualizações parciais
-
-        if (dto.valor() != null) {
-            if (dto.valor().compareTo(BigDecimal.ZERO) <= 0) {
-                throw new IllegalArgumentException("Valor deve ser maior que zero.");
-            }
-            pedidoAtualizar.setValor(dto.valor());
-        }
 
         if (dto.cliente_id() != null) {
             Cliente cliente = clienteRepository.findById(dto.cliente_id())
