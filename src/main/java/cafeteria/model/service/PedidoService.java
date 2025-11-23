@@ -28,13 +28,13 @@ public class PedidoService {
     // CREATE (usando DTO)
     public Pedido novoPedido(PedidoDTO dto) {
 
-        Cliente cliente = clienteRepository.findById(dto.cliente_id())
+        Cliente cliente = clienteRepository.findById(dto.cliente_id().intValue())
                 .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado: " + dto.cliente_id()));
 
-        Atendente atendente = atendenteRepository.findById(dto.atendente_id())
+        Atendente atendente = atendenteRepository.findById(dto.atendente_id().intValue())
                 .orElseThrow(() -> new IllegalArgumentException("Atendente não encontrado: " + dto.atendente_id()));
 
-        Pedido pedido = new Pedido(dto.valor(), cliente, atendente);
+        Pedido pedido = new Pedido(cliente, atendente);
 
         return pedidoRepository.save(pedido);
     }
@@ -99,13 +99,13 @@ public class PedidoService {
         //Atualizações parciais
 
         if (dto.cliente_id() != null) {
-            Cliente cliente = clienteRepository.findById(dto.cliente_id())
+            Cliente cliente = clienteRepository.findById(dto.cliente_id().intValue())
                     .orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado: " + dto.cliente_id()));
             pedidoAtualizar.setCliente(cliente);
         }
 
         if (dto.atendente_id() != null) {
-            Atendente atendente = atendenteRepository.findById(dto.atendente_id())
+            Atendente atendente = atendenteRepository.findById(dto.atendente_id().intValue())
                     .orElseThrow(() -> new IllegalArgumentException("Atendente não encontrado: " + dto.atendente_id()));
             pedidoAtualizar.setAtendente(atendente);
         }
