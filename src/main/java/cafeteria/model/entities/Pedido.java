@@ -17,6 +17,9 @@ public class Pedido {
     @Column(name = "datahora", nullable = false)
     private LocalDateTime dataHora;
 
+    @Column(name = "datahora_finalizacao", nullable = false)
+    private LocalDateTime dataHoraFinalizacao;
+
     //ForeignKey para Cliente
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
@@ -68,6 +71,14 @@ public class Pedido {
 
     public void setDatahora(LocalDateTime datahora) {
         this.dataHora = datahora;
+    }
+
+    public LocalDateTime getDataHoraFinalizacao() {
+        return dataHoraFinalizacao;
+    }
+
+    public void setDataHoraFinalizacao(LocalDateTime dataHoraFinalizacao) {
+        this.dataHoraFinalizacao = dataHoraFinalizacao;
     }
 
     public Cliente getCliente() {
