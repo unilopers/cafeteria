@@ -73,6 +73,13 @@ public class ClienteService  {
         return clienteEncontrado;
     }
 
+    @Transactional(readOnly = true)
+    public List<Pedido> buscarHistoricoPedido(Integer  idCliente) throws Exception{
+        Cliente cliente = clienteRepository.findById(idCliente).orElseThrow(() ->
+                new Exception("Cliente com o ID "+idCliente+" não encontrado"));
+        return cliente.getPedidos();
+    }
+
     //Delete
     public void apagarClienteId(Integer id) throws Exception {
         if (clienteRepository.findById(id).isEmpty()){
