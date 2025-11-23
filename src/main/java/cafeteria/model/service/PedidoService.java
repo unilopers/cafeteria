@@ -4,9 +4,7 @@ import cafeteria.dto.PedidoDTO;
 import cafeteria.model.repository.AtendenteRepository;
 import cafeteria.model.repository.ClienteRepository;
 import cafeteria.model.repository.PedidoRepository;
-import cafeteria.model.entities.Atendente;
-import cafeteria.model.entities.Cliente;
-import cafeteria.model.entities.Pedido;
+import cafeteria.model.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
