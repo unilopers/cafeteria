@@ -46,12 +46,12 @@ public class ProdutoService {
     }
 
     //Validações básicas
-    private void validarProduto(Produto p) {
+    private void validarProduto(Produto p) throws IllegalArgumentException {
         if (p.getNome() == null || p.getNome().isBlank()) {
             throw new IllegalArgumentException("O nome do produto não pode ser vazio.");
         }
 
-        if (p.getPreco() == null || p.getPreco().doubleValue() <= 0) {
+        if (p.getPreco() == null || p.getPreco().compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("O preço deve ser maior que zero.");
         }
 
