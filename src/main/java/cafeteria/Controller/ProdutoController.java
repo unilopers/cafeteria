@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/produtos") // O endereço será: http://localhost:8080/produtos
+@RequestMapping("/produto") // O endereço será: http://localhost:8080/produtos
 public class ProdutoController {
 
     @Autowired
@@ -38,7 +38,7 @@ public class ProdutoController {
     
     
     //POST
-    @PostMapping
+    @PostMapping("/novo")
     public ResponseEntity<ProdutoResponse> criar(@RequestBody Produto produto) {
         Produto salvo = service.criar(produto);
 
