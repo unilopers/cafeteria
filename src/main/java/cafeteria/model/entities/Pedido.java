@@ -42,13 +42,16 @@ public class Pedido {
     @PrePersist
     public void aoCriar() {
         this.dataHora = LocalDateTime.now();
+        if (this.valor == null){
+            this.valor = BigDecimal.ZERO;
+        }
     }
 
     public Pedido (){}
 
     public Pedido(Cliente cliente, Atendente atendente) {
         //this.id =
-        //this.valor = recalcularValor()
+        this.valor = BigDecimal.ZERO;
         //this.dataHora = método "aoCriar"
         this.cliente = cliente;
         this.atendente = atendente;
