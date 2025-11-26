@@ -3,7 +3,7 @@ package cafeteria.Controller;
 import cafeteria.dto.ProdutoResponse;
 import cafeteria.model.entities.Produto;
 import cafeteria.model.service.ProdutoService;
-import cafeteria.model.repository.ProdutoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,58 +12,91 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/produto") // O endereço será: http://localhost:8080/produtos
+@RequestMapping("/produto")
 public class ProdutoController {
 
     @Autowired
     private ProdutoService service;
 
-    // GET - listar todos
-    @GetMapping
-    public ResponseEntity<List<ProdutoResponse>> listarTodos() {
-        List<ProdutoResponse> resposta = service.listarTodos()
-                .stream()
-                .map(ProdutoResponse::new)
-                .toList();
+    // LISTAR TODOS
+    @GetMapping("/listar")
+    public ResponseEntity<?> listarTodos() {
+        try {
+            List<ProdutoResponse> resposta = service.listarTodos()
+                    .stream()
+                    .map(ProdutoResponse::new)
+                    .toList();
 
-        return ResponseEntity.ok(resposta);
+            return ResponseEntity.ok(resposta);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao listar produtos: " + e.getMessage());
+        }
     }
 
-     //Busca por id
+    // BUSCAR POR ID
     @GetMapping("/{id}")
-    public ResponseEntity<ProdutoResponse> buscarPorId(@PathVariable Long id) {
-        Produto produto = service.buscarPorId(id);
-        return ResponseEntity.ok(new ProdutoResponse(produto));
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
+        try {
+            Produto produto = service.buscarPorId(id);
+            return ResponseEntity.ok(new ProdutoResponse(produto));
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao buscar produto: " + e.getMessage());
+        }
     }
-    
-    
-    //POST
+
+    // CRIAR
     @PostMapping("/novo")
-    public ResponseEntity<ProdutoResponse> criar(@RequestBody Produto produto) {
-        Produto salvo = service.criar(produto);
+    public ResponseEntity<?> criar(@RequestBody Produto produto) {
+        try {
+            Produto salvo = service.criar(produto);
 
-        return ResponseEntity
-                .created(URI.create("/produtos/" + salvo.getId()))
-                .body(new ProdutoResponse(salvo));
+            return ResponseEntity
+                    .created(URI.create("/produto/" + salvo.getId()))
+                    .body(new ProdutoResponse(salvo));
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao criar produto: " + e.getMessage());
+        }
     }
 
-    //atualizar
-    @PutMapping("/{id}")
-    public ResponseEntity<ProdutoResponse> atualizar(
+    // ATUALIZAR
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<?> atualizar(
             @PathVariable Long id,
             @RequestBody Produto produtoAtualizado
     ) {
-        Produto atualizado = service.atualizar(id, produtoAtualizado);
-        return ResponseEntity.ok(new ProdutoResponse(atualizado));
+        try {
+            Produto atualizado = service.atualizar(id, produtoAtualizado);
+            return ResponseEntity.ok(new ProdutoResponse(atualizado));
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao atualizar produto: " + e.getMessage());
+        }
     }
 
-    //remover
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        service.deletar(id);
-        return ResponseEntity.noContent().build();
-    }
+    // DELETAR
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<?> deletar(@PathVariable Long id) {
+        try {
+            service.deletar(id);
+            return ResponseEntity.noContent().build();
 
-    
-    
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Erro ao deletar produto: " + e.getMessage());
+        }
+    }
 }
